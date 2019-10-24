@@ -1,12 +1,14 @@
 FROM jrottenberg/ffmpeg:4.2-alpine as ffmpeg
 WORKDIR /build
 COPY audio.sh /build
-RUN /build/audio.sh aac
-COPY video.sh LiberationMono-Regular.ttf /build/
-RUN /build/video.sh 640x360 h264 baseline 3.0 60k
-RUN /build/video.sh 854x480 h264 main 3.1 100k
-RUN /build/video.sh 1280x720 h264 main 4.0 300k
-RUN /build/video.sh 1920x1080 h264 high 4.2 600k
+RUN /build/audio.sh 60 aac
+COPY input.sh video.sh LiberationMono-Regular.ttf /build/
+RUN /build/input.sh 1920x1080 24 60
+RUN /build/video.sh 640x360 24 h264 baseline 3.0 60k
+RUN /build/video.sh 854x480 24 h264 main 3.1 100k
+RUN /build/video.sh 1280x720 24 h264 main 4.0 300k
+RUN /build/video.sh 1920x1080 24 h264 high 4.2 600k
+RUN rm input.mp4
 
 FROM google/shaka-packager:release-v2.3.0 as shaka
 WORKDIR /build

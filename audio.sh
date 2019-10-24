@@ -1,9 +1,7 @@
 #!/bin/sh
 
-CODEC=$1 # aac
-
-# Duration in seconds.
-DURATION=60
+DURATION=$1	# 60
+CODEC=$2	# aac
 
 ffmpeg \
   -f lavfi -i "sine=frequency=1:beep_factor=800:duration=${DURATION}" \
